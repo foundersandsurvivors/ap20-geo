@@ -1,0 +1,73 @@
+nstructions for using github.com/foundersandsurvivors repos for developers
+ssilcot Nov 2013
+===========================================================================
+
+Entered commands are in [square brackets]
+
+Example: https://github.com/foundersandsurvivors/ap20-geo
+   - login to github
+   - go to https://github.com/foundersandsurvivors/ap20-geo
+   - click "Settings" on right panel
+   - click "Collaborators" on left panel
+     2 teams shown:
+      foundersandsurvivors/owners (only ssilcot here)
+      foundersandsurvivors/geo-developers (ssilcot and mattcoller here)
+      * Note I set up geo-developers with pull, push and admin rights for this repo
+
+There are 2 branches in foundersandsurvivors/ap20-geo
+  - master (always be valid; is the latest stable release)
+  - dev-matt ( for mattcoller to develop in)
+
+------------------------- Usage example from a unix box:
+
+---- Preliminaries:
+
+Ensure name/email set so history will show who/where made a change:
+   [ git config --global user.name "Your Name" ]
+   [ git config --global user.email account@HOSTNAME.PLATFORM   ]
+# will help by showng from who/where a change got made in history
+
+---- Coping an existing repo:
+
+  - [ git clone http://github.com/foundersandsurvivors/ap20-geo.git ]
+    # clones the repo as dir "ap20-geo"
+
+---- Usage:
+
+  - [ cd ap20-geo ]
+
+  - # check the status: [ git status ]
+trace: built-in: git 'status'
+# On branch master
+nothing to commit (working directory clean)
+
+
+  - # switch to branch dev-matt: [ git checkout dev-matt ]
+trace: built-in: git 'checkout' 'dev-matt'
+Branch dev-matt set up to track remote branch dev-matt from origin.
+Switched to a new branch 'dev-matt'
+
+  - edit/test code....
+    # e.g. I edited this file: info-for-matt.txt 
+
+  - [ git status ]
+trace: built-in: git 'status'
+# On branch dev-matt
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       info-for-matt.txt
+nothing added to commit but untracked files present (use "git add" to track)
+
+  - add the new file: [ git add info-for-matt.txt ]
+trace: built-in: git 'add' 'info-for-matt.txt'
+
+  - [ git status ]
+trace: built-in: git 'status'
+# On branch dev-matt
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       new file:   info-for-matt.txt
+#
+
