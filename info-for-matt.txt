@@ -119,6 +119,13 @@ To github:foundersandsurvivors/ap20-geo.git
   - when in doubt "git status" is your friend
   - let Sandra know you want to "release" dev-matt as a new "master" (or diy)
 
+    From here: http://joslynesser.com/blog/archives/2010/09/06/git-workflow-for-small-teams/
+git checkout master
+git merge dev-matt
+git tag 1.0.0
+git push
+git push --tags
+
 ================================== some useful aliases I have developed to use:
 
 alias gcheck='git remote update;git show-branch --list *master'
