@@ -71,3 +71,81 @@ trace: built-in: git 'status'
 #       new file:   info-for-matt.txt
 #
 
+  - commit the change: [ git commit -a -m "Added info-for-matt.txt" ]
+trace: built-in: git 'commit' '-a' '-m' 'Added info-for-matt.txt'
+[dev-matt 66ea687] Added info-for-matt.txt
+ 1 file changed, 73 insertions(+)
+ create mode 100644 info-for-matt.txt
+
+  - [ git status ]
+trace: built-in: git 'status'
+# On branch dev-matt
+# Your branch is ahead of 'origin/dev-matt' by 1 commit.
+#
+nothing to commit (working directory clean)
+
+  - to see what would happen if we pushed up to githib
+    # ASSUMES you have followed section below "when you get sick of"
+    # If not you'll be prompted for your gitgub account name and password:
+    [ git push --dry-run ]
+
+Enter passphrase for key '/home/ssilcot/.ssh/ssilcot@github.com':
+To github:foundersandsurvivors/ap20-geo.git
+   4684ce8..66ea687  dev-matt -> dev-matt
+
+  - ok lets do it: [ git push ]
+
+    
+
+================================== some useful aliases I use:
+
+alias gcommit='git commit -a -m'               # You can then edit in your commit message.
+alias gls='git ls-files -t'                    # lists files
+alias glst='git ls-tree -r HEAD|cut -c54-'     # as above but works in bare repos
+alias gpush='git push --dry-run -v'            # show what would happen if we push 
+alias gpush-do='git push -v'
+
+================================== when you get sick of entering username/password:
+
+Read this: https://help.github.com/articles/generating-ssh-keys
+
+Example:
+
+  - generating an ADDITIONAL key just for github:
+  [ cd ~/.ssh ]
+  [ ssh-keygen -t rsa -C "yourname@github.com" ]
+     -- enter a passphrase; save the file to yourname@github.com
+     -- permissions must be 600 on the key file and 644 on the .pub
+  [ ssh -i 'ssilcot@github.com' -T git@github.com ]
+
+  - Paste it into github: foundersandsurvivors / ap20-geo > Settings > Deploy keys
+  giving it the name 'yourname@github.com"
+
+  - Test it:  [ ssh -i 'yourname@github.com' -T git@github.com ]
+Warning: Permanently added the RSA host key for IP address '******' to the list of known hosts.
+Enter passphrase for key 'yourname@github.com':
+Hi foundersandsurvivors/ap20-geo! You've successfully authenticated, but GitHub does not provide shell access.
+
+  - Enter a shortcut in your ssh config file: [ vi ~/.ssh/config ]
+Host github
+     Hostname github.com
+     User git
+     IdentityFile ~/.ssh/yourname@github.com
+
+  - And again, using the shortcut: [ ssh -T github ]
+Warning: Permanently added the RSA host key for IP address '******' to the list of known hosts.
+Enter passphrase for key 'username@github.com':
+Hi foundersandsurvivors/ap20-geo! You've successfully authenticated, but GitHub does not provide shell access.
+
+  - now modify the .git/config to use your shortcut:
+    #OLD: url = http://github.com/foundersandsurvivors/ap20-geo.git
+    url = github:foundersandsurvivors/ap20-geo.git
+
+  - now you can push to github and you'll just be prompted for your passphrase: [ git push --dry-run ]
+Enter passphrase for key '/home/ssilcot/.ssh/ssilcot@github.com':
+To github:foundersandsurvivors/ap20-geo.git
+   4684ce8..66ea687  dev-matt -> dev-matt
+
+
+  
+
