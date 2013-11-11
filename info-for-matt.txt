@@ -1,4 +1,4 @@
-nstructions for using github.com/foundersandsurvivors repos for developers
+Instructions for using github.com/foundersandsurvivors repos for developers
 ssilcot Nov 2013
 ===========================================================================
 
