@@ -93,17 +93,55 @@ Enter passphrase for key '/home/ssilcot/.ssh/ssilcot@github.com':
 To github:foundersandsurvivors/ap20-geo.git
    4684ce8..66ea687  dev-matt -> dev-matt
 
-  - ok lets do it: [ git push ]
+  - ok lets do it: 
 
-    
+    [ git commit -a -m "Added info-for-matt.txt" ]  # ensure you've committed the latest version
+    [ git push ]                                    # update github
+Enter passphrase:
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 2.43 KiB, done.
+Total 6 (delta 1), reused 0 (delta 0)
+To github:foundersandsurvivors/ap20-geo.git
+   4684ce8..238f1ef  dev-matt -> dev-matt
 
-================================== some useful aliases I use:
+  - now the new file is on the server in the dev-matt branch
 
-alias gcommit='git commit -a -m'               # You can then edit in your commit message.
-alias gls='git ls-files -t'                    # lists files
-alias glst='git ls-tree -r HEAD|cut -c54-'     # as above but works in bare repos
-alias gpush='git push --dry-run -v'            # show what would happen if we push 
+  ********************************************************
+    IMPORTANT
+  ********************************************************
+
+  - ALWAYS do a "git pull;git status" to ensure you're up to date with other developers changes!!!!
+  - when in doubt "git status" is your friend
+  - let Sandra know you want to "release" dev-matt as a new "master" (or diy)
+
+================================== some useful aliases I have developed to use:
+
+alias gcheck='git remote update;git show-branch --list *master'
+alias gcommit='git commit -a -m'
+alias glog='echo "-- Last 4 changes:";echo "";git log|head -24;echo "...";git log|tail -6'
+alias gls='git ls-files -t'
+alias glst='git ls-tree -r HEAD|cut -c54-'
+alias gpush='git push --dry-run -v'
 alias gpush-do='git push -v'
+alias gu='git pull;git status'
+
+==> This give me the following VERY basic flow:
+
+cd working-local-git-repo-on-your-machine
+gu # ensure up to date
+.. # do work and test and when ok
+git status
+   # add files in needed
+gcommit "An informative message as to whats changed"
+gpush    # dry-run!
+gpush-do # git hub has been updated!
+
+================================== More info:
+
+Loosely modelled on "github flow": 
+http://scottchacon.com/2011/08/31/github-flow.html
 
 ================================== when you get sick of entering username/password:
 
