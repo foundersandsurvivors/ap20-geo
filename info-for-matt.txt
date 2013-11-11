@@ -34,6 +34,9 @@ Ensure name/email set so history will show who/where made a change:
 
 ---- Usage:
 
+Note in examples below the environment variable GIT_TRACE was set to true [ export GIT_TRACE=1 ]
+so the info here is more verbose than normal.
+
   - [ cd ap20-geo ]
 
   - # check the status: [ git status ]
@@ -184,6 +187,8 @@ Enter passphrase for key '/home/ssilcot/.ssh/ssilcot@github.com':
 To github:foundersandsurvivors/ap20-geo.git
    4684ce8..66ea687  dev-matt -> dev-matt
 
-
+  - To help debug doing this, set these environment variables:
+export GIT_TRACE=1
+export GIT_CURL_VERBOSE=1
   
 
