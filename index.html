@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<head>
+    <title>Koorie Heritage Research Database</title>
+    <!-- *** Replace the key below below with your own API key, available at http://code.google.com/apis/maps/signup.html *** -->
+    <!-- *** Key registered for collection.temporalearth.net *** -->
+    <script src="http://www.google.com/jsapi?key=ABQIAAAAmRWaIy_4lcAGamC2ggav5RTa7TkyGyOkAoF8gvXXVGrfQcsJfRSirXEhjZO_tH0fKRb1TGiyvyJXXg"></script>
+    <!-- script src="http://www.google.com/jsapi?key=ABQIAAAAmRWaIy_4lcAGamC2ggav5RQK17mp4w_3Vu-n8xMeBzpu-mv5iRTsxrli1odY_FXk4BUj5-nPFXdy-Q"></script -->
+	<script src="ge-ticks.js"></script>
+  </head>
+  <body onload='init()' id='body'>
+    <center>
+    	<div>
+    	<h1 style="display:inline;">Koorie Heritage Research Database</h1><em> visualisation by Matthew Coller, for <a href="http://foundersandsurvivors.org" target="_blank">Founders and Survivors</a></em></div>
+  </center>
+    <p>This is a preliminary visualisation, to show how the visualisation will work in a browser.  It currently requires the Google Earth plug-in (installed automatically when you install Google Earth).  However, the underlying data is in standard KML, so the visualisation platform could be changed in future.</p>
+      <div id='map3d' style='border: 1px solid silver; height: 720px; width: 1280px; float: left;'><span id="plugin-fail" style="display:none;">You need to  the <a href="http://www.google.com/earth/explore/products/plugin.html">Google Earth Plug-in</a>.</span></div>
+
+	restart <a href="#" onclick='restartAnim(this.innerHTML); return false;'>1795</a>
+	
+	<script>
+
+		function restartAnim(dateString) {
+			//alert(dateString);
+			//alert(ge);
+			//timeSpan = ge.createTimeSpan('controlerTimeSpan');
+			//alert(controlerTimeSpan);
+			controlerTimeSpan.getBegin().set(dateString);
+			controlerTimeSpan.getEnd().set(dateString);
+			//alert(controlerTimeSpan.getBegin().get());
+			ge.getTime().setTimePrimitive(controlerTimeSpan);
+			//ge.getTime().setRate(0);
+			if (document.getElementById("timeline_rate")) {
+				ge.getTime().setRate(parseFloat(document.getElementById("timeline_rate").value));			
+			} else {
+				ge.getTime().setRate(60*60*24*365*10);
+			}
+
+		}
+	
+	</script>
+
+    <p>KHRD datasets:<br />
+      <input type="checkBox" name="khrd-births" value="../foundersandsurvivors/khrd-kml/khrdAll-births.kml" class="kml-checkbox">KHRD Births as icons</input><br />
+      <input type="checkBox" name="khrd-births" value="../foundersandsurvivors/khrd-kml/khrdAll-births_gaussian.kml" checked="checked" class="kml-checkbox">KHRD Births as gaussian icons</input><br />
+      <input type="checkBox" name="khrd-births-heatmap" value="../foundersandsurvivors/khrd-heatmap/khrd-heatmap-preload.kml" class="kml-checkbox">KHRD Births heatmap</input><br />
+      <input type="checkBox" name="years" value="http://collection.temporalearth.net/layers/dates/years1800-1980.kml" class="kml-checkbox" checked="checked">Year display</input><br />
+	</p>
+
+    <p>High-quality contextual datasets (limited coverage): <br />
+      <input type="checkBox" name="railways-SA" value="contextSets/AboriginalTribes-Victoria-outputKML.kml" class="kml-checkbox">Victorian Aboriginal Language Areas</input><br />
+      <input type="checkBox" name="squatting-Vic" value="contextSets/VicSquatting-growFill.kml" class="kml-checkbox" checked="checked">Growth of pastoral occupation (squatting) in Victoria, 1834-1848</input><br />
+      <input type="checkBox" name="mission-stations" value="khrd-kml/MissionStations/MissionStations-smSym.kml" class="kml-checkbox" checked="checked">Mission Stations & Aboriginal Reserves</input><br />
+      <input type="checkBox" name="stateBorders" value="http://collection.temporalearth.net/layers/Borders/AustStateBorders-Chronology.kml" class="kml-checkbox" checked="checked">State Borders</input><br />
+      <input type="checkBox" name="railways-Vic" value="http://collection.temporalearth.net/outputKML/VicRailways-QuinlanNewland.kml" class="kml-checkbox" checked="checked">Railways Victoria</input><br />
+      <input type="checkBox" name="railways-SA" value="http://collection.temporalearth.net/outputKML/SA-datedRailways.kml" class="kml-checkbox">Railways South Australia</input><br />
+</p>
+
+    <p>Low-quality contextual data sets (wider coverage):<br />
+      <input type="checkBox" name="euro-settlement" value="../HistoricalMaps/EuroSettlement/EuroSettlement-Decades.kml" class="kml-checkbox">Pastoral Settlement (slow to load, currently low-res)</input><br />
+      <input type="checkBox" name="railways-chronology" value="../outputKML/RailwaysChronology.kml" class="kml-checkbox">Earlier version of Railways Vic & NSW</input><br />
+ </p>
+
+
+
+	<input type="hidden" id="lookAt_latitude" value="-36.5" />
+	<input type="hidden" id="lookAt_longitude" value="145" />
+	<input type="hidden" id="lookAt_range" value="1100000" />
+	<input type="hidden" id="timeline_begin" value="1795" />
+	<input type="hidden" id="timeline_end" value="1795" />
+	<input type="hidden" id="timeline_rate" value="131557600" />
+    <p>Datasets for Tasmania: </p>
+	<ul>
+		<li><input type="checkBox" name="tas-settlement" value="../outputKML/LandSettlementEarlyTas-polygons.kml" class="kml-checkbox">Land Grants - from Land Settlement In Early Tasmania (Morgan 1992)</input></li>
+	</ul>
+    <p>Explorers: </p>
+	<ul>
+		<li><input type="checkBox" name="euro-settlement" value="../outputKML/Flinders-Only.kml" class="kml-checkbox">Matthew Flinders</input></li>
+		<li><input type="checkBox" name="euro-settlement" value="../outputKML/Baudin-Only.kml" class="kml-checkbox">Nicholas Baudin</input></li>
+		<li><input type="checkBox" name="euro-settlement" value="../outputKML/convictShips-1700s.kml" class="kml-checkbox">Convict Arrivals 1700s</input></li>
+		<li><input type="checkBox" name="euro-settlement" value="../outputKML/convictShips-1800s.kml" class="kml-checkbox">Convict Arrivals 1800s</input></li>
+	</ul>
+    <p>KHRD live test</p>
+	<ul>
+		<li><input type="checkBox" name="tas-settlement" value="tsvTransform/khrd-placenames-full=births.kml?FAMILY_GROUP=YOUN&accLimit=50" class="kml-checkbox">tsvTransform/khrd-placenames-full=births.kml?FAMILY_GROUP=YOUN&accLimit=50</input></li>
+		<li><input type="checkBox" name="tas-settlement" value="tsvTransform/khrd-placenames-full=deaths.kml?FAMILY_GROUP=YOUN&accLimit=50" class="kml-checkbox">tsvTransform/khrd-placenames-full=deaths.kml?FAMILY_GROUP=YOUN&accLimit=50</input></li>
+		<li><input type="checkBox" name="tas-settlement" value="tsvTransform/khrd-placenames-full=joinplaces.kml?FAMILY_GROUP=YOUN&accLimit=50" class="kml-checkbox">tsvTransform/khrd-placenames-full=joinplaces.kml?FAMILY_GROUP=YOUN&accLimit=50</input></li>
+		<li><input type="checkBox" name="tas-settlement" value="tsvTransform/khrd-placenames-full=track.kml?FAMILY_GROUP=YOUN&accLimit=50" class="kml-checkbox">tsvTransform/khrd-placenames-full=track.kml?FAMILY_GROUP=YOUN&accLimit=50</input></li>
+	</ul>
+    <p>KHRD pre-generated</p>
+	<ul>
+		<li><input type="checkBox" name="births" value="outputKHRD/khrd-placenames-full=births.kml" class="kml-checkbox">outputKHRD/khrd-placenames-full=births.kml</input></li>
+		<li><input type="checkBox" name="deaths" value="outputKHRD/khrd-placenames-full=deaths.kml" class="kml-checkbox">outputKHRD/khrd-placenames-full=deaths.kml</input></li>
+		<li><input type="checkBox" name="joinplaces" value="outputKHRD/khrd-placenames-full=joinplaces.kml" class="kml-checkbox">outputKHRD/khrd-placenames-full=joinplaces.kml</input></li>
+		<li><input type="checkBox" name="track" value="outputKHRD/khrd-placenames-full=track.kml" class="kml-checkbox">outputKHRD/khrd-placenames-full=track.kml</input></li>
+	</ul>
+   <p>Notes: </p>
+	<ul>
+		<li>The symbology used here is preliminary, and may be somewhat inappropriate - open for discussion!</li>
+		<li>This visualisation is made using simple lat-lon values, so multiple instances of the same place appear as icons piled on top of one another.  Each icon is semi-transparent, so clusters show as more opaque sets. The geocoding also includes an 'accuracy' attribute that would allow randomisation of location, or possible density temporal mapping.</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,63 @@
+([^\s]*)\t([^\s]*)\t([^\s]*)\t([^\s]*)\t([^\s]*)\r
+
+	<GroundOverlay>
+		<name>KHRD Births \2 to \3</name>
+		<TimeSpan>
+			<begin>\2</begin>
+			<end>\4</end>
+		</TimeSpan>
+		<Icon>
+			<href>densityCol_\1_blur20.png</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<color>ffffffff</color>
+		<LatLonBox>
+			<north>-32</north>
+			<south>-41</south>
+			<east>151</east>
+			<west>139</west>
+		</LatLonBox>
+	</GroundOverlay>
+
+------------------------- preload ------------------------------------------
+
+	<GroundOverlay>
+		<name>KHRD Births \2 to \3</name>
+		<TimeSpan>
+			<begin>\2</begin>
+			<end>\4</end>
+		</TimeSpan>
+		<Icon>
+			<href>densityCol_\1_blur20.png</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<color>ffffffff</color>
+		<LatLonBox>
+			<north>-32</north>
+			<south>-41</south>
+			<east>151</east>
+			<west>139</west>
+		</LatLonBox>
+	</GroundOverlay>
+
+	<GroundOverlay>
+		<name>Preload KHRD Births \2 to \3</name>
+		<TimeSpan>
+			<begin>\5</begin>
+			<end>\2</end>
+		</TimeSpan>
+		<Icon>
+			<href>densityCol_\1_blur20.png</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<color>ffffffff</color>
+		<LatLonBox>
+			<north>-40.32</north>
+			<south>-40.41</south>
+			<east>151.51</east>
+			<west>151.39</west>
+		</LatLonBox>
+	</GroundOverlay>
+
+
+

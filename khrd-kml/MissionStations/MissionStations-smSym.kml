@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>MissionStations.kml</name>
+
+    <Style id="railway">
+      <LineStyle>
+        <color>ff111111</color>
+        <width>2</width>
+      </LineStyle>
+    </Style>
+
+
+	<Style id="Stn">
+		<IconStyle>
+			<scale>.4</scale>
+			<Icon>
+				<href>cross-icon.png</href>
+			</Icon>
+			<color>CCFFFFFF</color>
+		</IconStyle>
+		<LabelStyle><scale>0.5</scale> <color>ffffffff</color> </LabelStyle>
+		<LineStyle>
+			<color>CCFFFFFF</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	
+	<Style id="Res">
+		<IconStyle>
+			<scale>.3</scale>
+			<Icon>
+				<href>AbFlag.png</href>
+			</Icon>
+			<color>99FFFFFF</color>
+		</IconStyle>
+		<LabelStyle><scale>0.5</scale> <color>ffffffff</color> </LabelStyle>
+		<LineStyle>
+			<color>CCFFFFFF</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+
+	<LookAt>
+		<gx:TimeSpan>
+			<begin>1800</begin>
+			<end>2010</end>
+		</gx:TimeSpan>
+		<longitude>146</longitude>
+		<latitude>-36</latitude>
+		<altitude>0</altitude>
+		<heading>0</heading>
+		<tilt>0</tilt>
+		<range>1000000</range>
+		<altitudeMode>relativeToGround</altitudeMode>
+		<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+	</LookAt>
+
+	<Placemark>
+		<name>LakeCondah</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1861</begin>
+			<end>1951</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>141.79125,-38.07402778,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>LakeCondah</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1867</begin>
+			<end>1918</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>141.79125,-38.07402778,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Framlingham</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1861</begin>
+			<end>2020</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>142.6481944, -38.30208333,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Elleminyt</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1871</begin>
+			<end>1948</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>143.6090110956219,-38.3544578187538,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Kangerton</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1866</begin>
+			<end>1879</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>142.3860073448132,-37.7895628697144,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Dergholm</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1879</begin>
+			<end>1902</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>141.29375,-37.37069444,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Tallageira</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1887</begin>
+			<end>1907</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>141.2333948246958,-36.63365642573324,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Enenezer</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1858</begin>
+			<end>1904</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>141.98737,-36.315317,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Gayfield</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1874</begin>
+			<end>1910</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>142.5568510905685,-34.8155865366674,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Yelta</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1854</begin>
+			<end>1868</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>141.911906,-34.117683,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Balranald</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1892</begin>
+			<end>1966</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>143.5547284148962,-34.6431116642959,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Warangesda</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1880</begin>
+			<end>1926</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>146.0012,-34.5652,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Darlington Pt</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1936</begin>
+			<end>2020</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>146.0012,-34.5652,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Moonahcullah</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1898</begin>
+			<end>1962</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.645271,-35.383864,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Moonahcullah</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1910</begin>
+			<end>1952</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.645271,-35.383864,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Cummeragunja</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1883</begin>
+			<end>2020</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.9574,-36.0279,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Cummeragunja</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1889</begin>
+			<end>1953</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.9574,-36.0279,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Maloga</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1874</begin>
+			<end>1888</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.984844,-36.06615,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Wahgunyah</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1891</begin>
+			<end>1937</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>146.3965278,-36.00986111,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Tangambalanga</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1862</begin>
+			<end>1873</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>147.0979976918166,-36.24689897819493,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Acheron</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1859</begin>
+			<end>1863</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>145.735734,-37.346504,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Coranderrk</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1863</begin>
+			<end>1924</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>145.5,-37.68333,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Karngun</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1861</begin>
+			<end>1900</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>143.832320128252,-37.56495988363339,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Steig</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1860</begin>
+			<end>1902</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.1931496493226,-37.82369961284245,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Duneed</name>
+		<styleUrl>#Res</styleUrl>
+		<TimeSpan>
+			<begin>1861</begin>
+			<end>1907</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>144.4216182637027,-38.26884166618737,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Ramahyuck</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1862</begin>
+			<end>1908</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>147.21667,-38.01667,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Lake Tyers</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1861</begin>
+			<end>2020</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>148.098529,-37.839584,0</coordinates>
+		</Point>
+	</Placemark>
+
+	<Placemark>
+		<name>Wallaga Lake</name>
+		<styleUrl>#Stn</styleUrl>
+		<TimeSpan>
+			<begin>1891</begin>
+			<end>2020</end>
+		</TimeSpan>
+		<Point>
+			<coordinates>150.0671,-36.3705,0</coordinates>
+		</Point>
+	</Placemark>
+
+
+
+</Document>
+</kml>

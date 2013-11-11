@@ -1,0 +1,14 @@
+<Files tsvTransform>
+ForceType application/x-httpd-php
+</Files>
+
+<Files makeCentroid>
+ForceType application/x-httpd-php
+</Files>
+
+<Files fasTransform>
+ForceType application/x-httpd-php
+</Files>
+
+# cd /Volumes/MPowerBookHD/Library/WebServer/Documents/
+# cp htaccess .htaccess

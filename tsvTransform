@@ -1,0 +1,434 @@
+<?php
+	
+	//  http://collection.temporalearth.local/dev-matt/tsvTransform/khrd-placenames-full.html
+	
+	$path = $_SERVER['PATH_INFO'];
+
+	$fileroot = substr($path, 1, strrpos($path, '.')-1);
+	$fileext = substr($path, strrpos($path, '.')+1);
+	
+
+
+	
+	if ($fileext == 'kml') {
+		header('Content-type: application/vnd.google-earth.kml+xml');
+	} else if ($fileext == 'html') {
+		header("Content-Type: text/html");
+	} else if ($fileext == 'png') {
+		header("Content-Type: image/png");
+	}
+	// ---- do not include any trace commands above here ---- //
+
+	trace(urlencode($path));
+	
+	trace("fileext = $fileext");
+	
+
+	$lastSeparator = strrpos($fileroot, '=');
+	if ($lastSeparator) {
+		$visMethod = substr($fileroot, $lastSeparator+1);
+		$tsvFileName = "../private_data/".substr($fileroot, 0, $lastSeparator).".tsv";
+	} else {
+		$tsvFileName = "../private_data/$fileroot.tsv";
+	}
+		
+	//$tsvFileName = "../private_data/$khrd-placenames-full.tsv";
+		
+	trace($_GET['file']);
+	
+	if ($_GET['file']) {
+		//$tsvFileName = "http://collection.temporalearth.local/inputKML/EersteSchipvaart-Track.kml";
+		$tsvFileName = $_GET['file'];
+	}
+	
+	if ($_GET['key']) {  //it's a Google Spreadsheet
+		//$tsvFileName = "http://collection.temporalearth.local/inputKML/EersteSchipvaart-Track.kml";
+		$key = $_GET['key'];
+		if ($_GET['gid']) { $gid = $_GET['gid'];} else { $gid = '0'; }
+		$tsvFileName = "https://spreadsheets1.google.com/spreadsheet/pub?key=$key&gid=0&output=txt";
+		// 
+	}
+	
+	//$tsvFileName = "https://spreadsheets1.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=0ArTP71ZBUZT5dHA4NGVSRG44TTN6QnJ3b2ZNMnRHVUE&single=true&gid=$gid&output=txt";
+	
+	
+	trace("PATH_INFO = $path");
+
+	trace("tsvFileName = $tsvFileName");
+	trace("visMethod = $visMethod");
+
+
+
+
+
+
+
+
+	
+	$gid = 0; //1801-1868
+	$gid = 2; //1787-1799
+	
+	//$tsvFileName = "https://spreadsheets1.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=0ArTP71ZBUZT5dHA4NGVSRG44TTN6QnJ3b2ZNMnRHVUE&single=true&gid=$gid&output=txt";
+	//$tsvFileName = "../private_data/khrd-placenames-full.tsv";
+	//$tsvFileName = "ConvictShips-local-1800s.tsv";
+
+	$headings_row = 0;
+	$headings_rows = 1;
+
+
+
+?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name><?php echo "$fileroot.$fileext" ?></name>
+	<open>0</open>
+
+<?php
+
+
+	$tsvFile = fopen($tsvFileName, 'r');
+	//$tsvContent = fread($tsvFile, filesize($tsvFileName));
+	if (!$tsvFile) {
+		exit('unable to open remote file');
+	}
+	$tsvContent = '';
+	while (!feof($tsvFile)) {
+		$part = fgets($tsvFile, 1024);
+		$tsvContent = $tsvContent.$part;
+	}
+	
+	$newLine = (strstr($tsvContent, "\n") ? "\n" : "\r");
+
+	$lines = explode($newLine, $tsvContent);
+	
+	trace(count($lines));
+
+
+	$column_headings = tabs2array($lines[$headings_row]);
+
+	for ($iLine=$headings_rows; $iLine<count($lines); $iLine++) {
+		$line = $lines[$iLine];
+		//echo "last character: ".substr($line, strlen($line)-1,1)."=".ord(substr($line, strlen($line)-1,1))."<br />\n";
+		//echo "2ndlast character: ".substr($line, strlen($line)-2,1)."=".ord(substr($line, strlen($line)-2,1))."<br />\n";
+		//echo "<pre>$line</pre>\n";
+		//$tabs = tabs2array($line);
+		$tabs = tabs2array($line);
+		$namedTabs = Array();
+		for ($iTab=0; $iTab<count($tabs); $iTab++) {
+			$namedTabs[$column_headings[$iTab]] = $tabs[$iTab];
+		}
+		trace('');
+		trace('');
+		trace("-----------".$namedTabs['RECID']);
+		trace(implode("|", $tabs));
+		if ($_GET['accLimit']) $accLimit = (float)$_GET['accLimit'];
+		$skip = false;
+		if ($_GET['FAMILY_GROUP']) $skip = $skip || $namedTabs['FAMILY_GROUP']!=$_GET['FAMILY_GROUP'];
+		if ($_GET['RECID']) $skip = $skip || $namedTabs['RECID']!=$_GET['RECID'];
+		if ($skip) {
+			trace("skipped");
+		} else {
+
+
+			if (isValidDate($namedTabs['BIRTH_DATE'])) trace("valid date: ".$namedTabs['BIRTH_DATE']); else trace("INVALID date: ".$namedTabs['BIRTH_DATE']);
+			if (isValidLatLon($namedTabs['birth_lat'], $namedTabs['birth_lon'], $namedTabs['birth_acc'])) trace("valid latlon"); else trace("INVALID latlon");
+			
+			//$colonyTrack = ($tabs[5]?$tabs[5]:'UK').'-'.$tabs[7];
+			
+			//$coordinates = getTrackCoordinates($colonyTrack);
+			
+			
+			$birthValid = isValidDate($namedTabs['BIRTH_DATE']) && isValidLatLon($namedTabs['birth_lat'], $namedTabs['birth_lon'], $namedTabs['birth_acc']);
+			$residValid = isValidLatLon($namedTabs['resid_lat'], $namedTabs['resid_lon'], $namedTabs['resid_acc']);
+			
+			$deathValid = isValidDate($namedTabs['DEATH_DATE']) && isValidLatLon($namedTabs['death_lat'], $namedTabs['death_lon'], $namedTabs['death_acc']);
+			if (!$deathValid && $residValid && isValidDate($namedTabs['DEATH_DATE'])) { $namedTabs['death_lat'] = $namedTabs['resid_lat']; $namedTabs['death_lon'] = $namedTabs['resid_lon']; $deathValid = true; trace('replace death place');}
+			
+			
+			if ($visMethod == 'births') {
+				if ($birthValid) {
+?>
+	<Placemark>
+		<name><?php echo $namedTabs['RECID']; ?></name>
+		<styleUrl>../khrd_styles.kml#birth</styleUrl>
+		<description>
+			RecID: <?php echo $namedTabs['RECID']; ?><br />
+			Family Group: <?php echo $namedTabs['FAMILY_GROUP']; ?><br />
+			Birth: <?php echo $namedTabs['BIRTH_DATE']; ?>, <?php echo $namedTabs['BIRTH_PLACE']; ?><br />
+			Usual Residence: <?php echo $namedTabs['USUAL_RESIDENCE']; ?><br />
+			Death: <?php echo $namedTabs['DEATH_DATE']; ?>, <?php echo $namedTabs['DEATH_PLACE']; ?><br />
+		</description>
+		<TimeStamp>
+			<when><?php echo $namedTabs['BIRTH_DATE']; ?></when>
+		</TimeStamp>
+		<Point>
+			<coordinates><?php echo $namedTabs['birth_lon'].",".$namedTabs['birth_lat'].",0 "; ?></coordinates>
+		</Point>
+	</Placemark>
+
+<?php
+				} // if ($birthValid)
+				
+			} elseif ($visMethod == 'deaths') {
+				if ($deathValid) {
+?>
+	<Placemark>
+		<name><?php echo $namedTabs['RECID']; ?></name>
+		<styleUrl>../khrd_styles.kml#death</styleUrl>
+		<description>
+			RecID: <?php echo $namedTabs['RECID']; ?><br />
+			Family Group: <?php echo $namedTabs['FAMILY_GROUP']; ?><br />
+			Birth: <?php echo $namedTabs['BIRTH_DATE']; ?>, <?php echo $namedTabs['BIRTH_PLACE']; ?><br />
+			Usual Residence: <?php echo $namedTabs['USUAL_RESIDENCE']; ?><br />
+			Death: <?php echo $namedTabs['DEATH_DATE']; ?>, <?php echo $namedTabs['DEATH_PLACE']; ?><br />
+		</description>
+		<TimeStamp>
+			<when><?php echo $namedTabs['DEATH_DATE']; ?></when>
+		</TimeStamp>
+		<Point>
+			<coordinates><?php echo $namedTabs['death_lon'].",".$namedTabs['death_lat'].",0 "; ?></coordinates>
+		</Point>
+	</Placemark>
+
+<?php
+				} // if ($birthValid)
+				
+			} elseif ($visMethod == 'joinplaces') {
+				if ($birthValid && $deathValid) {
+?>
+	<Placemark>
+		<name><?php echo $namedTabs['RECID']; ?></name>
+		<styleUrl>../khrd_styles.kml#life</styleUrl>
+		<description>
+			RecID: <?php echo $namedTabs['RECID']; ?><br />
+			Family Group: <?php echo $namedTabs['FAMILY_GROUP']; ?><br />
+			Birth: <?php echo $namedTabs['BIRTH_DATE']; ?>, <?php echo $namedTabs['BIRTH_PLACE']; ?><br />
+			Usual Residence: <?php echo $namedTabs['USUAL_RESIDENCE']; ?><br />
+			Death: <?php echo $namedTabs['DEATH_DATE']; ?>, <?php echo $namedTabs['DEATH_PLACE']; ?><br />
+		</description>
+		<TimeSpan>
+			<begin><?php echo $namedTabs['BIRTH_DATE']; ?></begin>
+			<end><?php echo $namedTabs['DEATH_DATE']; ?></end>
+		</TimeSpan>
+		<LineString>
+			<coordinates><?php echo $namedTabs['birth_lon'].",".$namedTabs['birth_lat'].",0 "; ?><?php if ($residValid) echo $namedTabs['resid_lon'].",".$namedTabs['resid_lat'].",0 "; ?><?php echo $namedTabs['death_lon'].",".$namedTabs['death_lat'].",0 "; ?></coordinates>
+		</LineString>
+	</Placemark>
+
+<?php
+				} // if ($birthValid && $deathValid) 
+			} elseif ($visMethod == 'track') {
+				if ($birthValid && $deathValid) {
+?>
+	<Placemark>
+		<name><?php echo $namedTabs['RECID']; ?></name>
+		<styleUrl>../khrd_styles.kml#life</styleUrl>
+		<description>
+			RecID: <?php echo $namedTabs['RECID']; ?><br />
+			Family Group: <?php echo $namedTabs['FAMILY_GROUP']; ?><br />
+			Birth: <?php echo $namedTabs['BIRTH_DATE']; ?>, <?php echo $namedTabs['BIRTH_PLACE']; ?><br />
+			Usual Residence: <?php echo $namedTabs['USUAL_RESIDENCE']; ?><br />
+			Death: <?php echo $namedTabs['DEATH_DATE']; ?>, <?php echo $namedTabs['DEATH_PLACE']; ?><br />
+		</description>
+		<gx:Track>
+			<gx:coord><?php echo $namedTabs['birth_lon']." ".$namedTabs['birth_lat']." 0"; ?></gx:coord><when><?php echo $namedTabs['BIRTH_DATE']; ?></when><gx:angles>0</gx:angles>
+			<?php if ($residValid) echo '<gx:coord>'.$namedTabs['resid_lon']." ".$namedTabs['resid_lat']." 0</gx:coord><when>".$namedTabs['DEATH_DATE']."</when><gx:angles>0</gx:angles>"; ?>
+			<gx:coord><?php echo $namedTabs['death_lon']." ".$namedTabs['death_lat']." 0"; ?></gx:coord><when><?php echo $namedTabs['DEATH_DATE']; ?></when><gx:angles>0</gx:angles>
+		</gx:Track>
+	</Placemark>
+
+<?php
+				} // if ($birthValid && $deathValid) 
+			} // if ($visMethod == ...
+		
+		} // if (!$skip) {
+	}  // for ($iLine
+
+
+	
+	//$replaced = preg_replace("/(.*)\tt/", 'and\1bye', "hello\tthere");
+	//$replaced = preg_replace('/(.*)\t(.*)/', '\t<Folder>\r\t\t<name>\10 %Track ../ExplorerStyles.kml#British</name>\r\t\t<description>\6</description>\r\t\t<Placemark>\r\t\t\t<name>\10</name>\r\t\t\t<description>\6</description>\r\t\t\t<TimeSpan>\r\t\t\t\t<begin>\5</begin>\r\t\t\t\t<end>\8</end>\r\t\t\t</TimeSpan>\r\t\t\t<routeCoords>\1</routeCoords>\r\t\t</Placemark>\r\t</Folder>\r', $tsvContent);
+	//$replaced = preg_replace('/(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)/', '\t<Folder>\r\t\t<name>\10 %Track ../ExplorerStyles.kml#British</name>\r\t\t<description>\6</description>\r\t\t<Placemark>\r\t\t\t<name>\10</name>\r\t\t\t<description>\6</description>\r\t\t\t<TimeSpan>\r\t\t\t\t<begin>\5</begin>\r\t\t\t\t<end>\8</end>\r\t\t\t</TimeSpan>\r\t\t\t<routeCoords>\1</routeCoords>\r\t\t</Placemark>\r\t</Folder>\r', $tsvContent);
+	//$replaced = preg_replace('/(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)\t(.*)/', '\1-\2-\3', $tsvContent);	
+	//$tsvContent = str_replace("\r\n", "\n", $tsvContent);
+
+?>
+</Document>
+</kml>
+
+<?php
+
+function isValidDate($dateString) {
+	return $dateString!='';
+}
+
+function isValidLatLon($lat, $lon, $acc) {
+	global $accLimit;
+	trace($lat.', '.$lon.', '.$acc);
+	if ($accLimit && (float)$acc > $accLimit) return false;
+	if ($lat=='#N/A' || $lon=='#N/A') return false;
+	if ($lat=='0' || $lon=='0') return false;
+	return true;
+}
+
+
+function openTracks() {
+	global $dom, $folders, $placemarks, $xpath, $track_array;
+	
+	$tsvFileName = "colonyTrackPairs.kml";	
+
+	$dom = new DOMDocument();
+	$dom->preserveWhiteSpace = false;
+	$dom->formatOutput = true;
+	if ($dom->Load($tsvFileName) === FALSE) {
+		exit("Could not open XML file: $tsvFileName");
+	}
+	
+	
+	$track_array = array();
+	
+	$nodeList = $dom->getElementsByTagName('Placemark');
+	trace("placemarks: ".$nodeList->length);
+	foreach ($nodeList as $node) {
+		$name = getNamedNode($node, 'name')->nodeValue;
+		trace("Placemark: $name");
+		if ($name) {
+			$track_array[$name] = $node;
+		}
+	}
+
+
+	$nodeList = $dom->getElementsByTagName('Folder');
+	trace("folders: ".$nodeList->length);
+	foreach ($nodeList as $node) {
+		$name = getNamedNode($node, 'name')->nodeValue;
+		trace("Folder: $name");
+		if ($name) {
+			$track_array[$name] = $node;
+		}
+	}
+	foreach ($track_array as $key => $value) {
+		trace($key.' = '.$value->nodeName);
+	}
+	/*	
+	
+	 DNW:
+	$xpath = new DOMXPath($dom);
+	$startNode = $dom->getElementsByTagName('kml')->item(0);
+	$folderCount = $xpath->evaluate('count(Placemark)', $startNode);
+	trace("there are $folderCount folders");
+	//	trace("XPath:".$xpath); */
+//trace("FINISHED");	exit;
+}
+
+
+function getTrackCoordinates($trackName) {
+	global $dom, $folders, $placemarks, $xpath, $track_array;
+
+	trace("getTrack:".$trackName);
+	
+	$trackNode = $track_array[$trackName];
+	
+	if ($trackNode == null) {
+		trace("ERROR: Track not found: $trackName");
+	} else {
+		//return getNamedNode($trackNode, 'coordinates')->nodeValue;
+		$coordinatesNodeList = $trackNode->getElementsByTagName("coordinates");
+		trace("numCoords: ".$coordinatesNodeList->length);
+		if ($coordinatesNodeList->length == 1) {
+			return $coordinatesNodeList->item(0)->textContent;
+		} else {
+			$t = rand(1,1000)/1000;
+			$offset = rand(1,1000)/1000;
+			trace("interpolating $t");
+			$coordinates0 = stringToCoordinatesArray($coordinatesNodeList->item(0)->textContent);
+			$coordinates1 = stringToCoordinatesArray($coordinatesNodeList->item(1)->textContent);
+			trace(count($coordinates0)." ?= ".count($coordinates1));
+			if (count($coordinates0) != count($coordinates1)) {
+				trace("ERROR: number of coordinates mismatch ".$trackName);
+				return null;
+			}
+			$newCoordinatesString = '';
+			$Pi2 = 3.14159*2;
+			$numCoords = count($coordinates0);
+			for ($i=0; $i<$numCoords; $i++) {
+				$t = (1+sin(($i/$numCoords + $offset)*$Pi2))/2;
+				$coord0 = $coordinates0[$i];
+				$coord1 = $coordinates1[$i];
+				$lon = (1-$t)*($coord0[0]) + $t*($coord1[0]);
+				$lat = (1-$t)*($coord0[1]) + $t*($coord1[1]);
+				$alt = (1-$t)*($coord0[2]) + $t*($coord1[2]);
+				$newCoordinatesString = $newCoordinatesString."$lon,$lat,$alt ";
+			}
+			return $newCoordinatesString;
+		}
+		
+	}
+	
+	//trace($xpath);
+	//$trackList = $xpath->evaluate('count(row/entry[.�=�"en"])');
+	//trace("nodes:".$trackList);
+	
+
+}
+
+function getNamedNode($featureNode, $nodeName) {
+	// problem with this function is that it searches right down the hierarchy - depends on node being direct child of featureNode
+	$namesNodeList = $featureNode->getElementsByTagName($nodeName);
+	if ($namesNodeList->length > 0) {
+		return $namesNodeList->item(0);
+	} else {
+		return null;
+	}
+}
+
+
+function tabs2array($line) {
+	$cells = explode("	",$line);
+	for ($itab=0; $itab<count($cells); $itab++) {
+		$cells[$itab] = trim(dequote($cells[$itab]));
+	}
+	return $cells;
+}
+
+function dequote($str) {
+	//echo "{".substr($str,0,1)."][".substr($str,strlen($str)-1,1)."}";
+	if (substr($str,0,1) == '"' && substr($str,strlen($str)-1,1) == '"') {
+		// excel doubles up any double-quote marks within cells, and adds quotes outside the cell too
+		return str_replace('""', '"', substr($str,1,strlen($str)-2));
+	} else {
+		return $str;
+	}
+}
+
+function stringToCoordinatesArray($str_passed) {
+		$coordinatesString = trim($str_passed);
+		// need to consolidate whitespace
+		$coordinatesString = str_replace("\n", ' ', $coordinatesString);
+		$coordinatesString = str_replace("\t", ' ', $coordinatesString);
+		while(strpos(' ', $coordinatesString)) {
+			$coordinatesString = str_replace("  ", ' ', $coordinatesString);
+		}
+		//$coordinatesString = str_replace("  ", ' ', $coordinatesString);
+		//$coordinatesString = str_replace("  ", ' ', $coordinatesString);
+		//$coordinatesString = str_replace("  ", ' ', $coordinatesString);
+		//$coordinatesString = str_replace("  ", ' ', $coordinatesString);
+		//$coordinatesString = str_replace("  ", ' ', $coordinatesString);
+		$triplesArray = explode(' ',$coordinatesString);
+		$coordinatesArray = array();
+		for ($i=0; $i<count($triplesArray); $i++) {
+			$coordinatesArray[$i] = explode(',', $triplesArray[$i]);
+		}
+		return $coordinatesArray;
+}
+
+
+function trace($z) {
+	global $fileext;
+	if ($fileext == 'html') {
+		echo htmlentities($z, ENT_COMPAT, 'UTF-8', false)."<br />\n";
+	}
+}
+
+?>
+

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>khrd_styles_gaussian</name>
+	<open>0</open>
+	
+	<Style id="birth">
+		<IconStyle>
+			<scale>1.5</scale>
+			<color>6666ccff</color>
+			<Icon>
+				<href>gaussian_white39.png</href>
+			</Icon>
+		</IconStyle>
+		<LineStyle>
+			<color>6666ccff</color>
+			<width>2</width>
+		</LineStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	
+	
+	<Style id="death">
+		<IconStyle>
+			<scale>1.5</scale>
+			<color>66000000</color>
+			<Icon>
+				<href>gaussian_white39.png</href>
+			</Icon>
+		</IconStyle>
+		<LineStyle>
+			<color>66000000</color>
+			<width>2</width>
+		</LineStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	
+	
+	<Style id="life">
+		<IconStyle>
+			<scale>1.5</scale>
+			<color>99ffffcc</color>
+			<Icon>
+				<href>gaussian_white39.png</href>
+			</Icon>
+		</IconStyle>
+		<LineStyle>
+			<color>99ffffcc</color>
+			<width>2</width>
+		</LineStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	
+	<Style id="conviction">
+		<IconStyle>
+			<scale>0.5</scale>
+			<Icon>
+				<href>icon-conviction.png</href>
+			</Icon>
+		</IconStyle>
+		<LineStyle>
+			<color>FF99AA99</color>
+			<width>1</width>
+		</LineStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+
+</Document>
+</kml>
